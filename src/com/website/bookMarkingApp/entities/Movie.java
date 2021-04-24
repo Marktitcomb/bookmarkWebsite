@@ -3,19 +3,33 @@ package com.website.bookMarkingApp.entities;
 public class Movie {
 	
 	
-	private String name;
+	private long id;
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	private String title;
 	private int releaseYear;
+	private String profileUrl;
+	public String getProfileUrl() {
+		return profileUrl;
+	}
+	public void setProfileUrl(String profileUrl) {
+		this.profileUrl = profileUrl;
+	}
 	private String []  cast;
 	private String []  directors;
 	private String genre;
 	private double imdbRating;
 	
 	
-	public String getName() {
-		return name;
+	public long getId() {
+		return id;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setId(long id) {
+		this.id = id;
 	}
 	public int getReleaseYear() {
 		return releaseYear;

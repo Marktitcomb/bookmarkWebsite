@@ -3,12 +3,27 @@ package com.website.bookMarkingApp.entities;
 public class Book {
 	
 	private String Author;
-	
+	private long id;
+	private String title;
 	private String publisher;
-	private String publishYear;
+	private int publishYear;
 	private String [] authors;
 	private String genre;
-	private String amazonRating;
+	private double amazonRating;
+	
+	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	
 	
 	public String getAuthor() {
@@ -23,10 +38,10 @@ public class Book {
 	public void setPublisher(String publisher) {
 		this.publisher = publisher;
 	}
-	public String getPublishYear() {
+	public int getPublishYear() {
 		return publishYear;
 	}
-	public void setPublishYear(String publishYear) {
+	public void setPublishYear(int publishYear) {
 		this.publishYear = publishYear;
 	}
 	public String[] getAuthors() {
@@ -41,10 +56,10 @@ public class Book {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	public String getAmazonRating() {
+	public double getAmazonRating() {
 		return amazonRating;
 	}
-	public void setAmazonRating(String amazonRating) {
+	public void setAmazonRating(double amazonRating) {
 		this.amazonRating = amazonRating;
 	}
 	

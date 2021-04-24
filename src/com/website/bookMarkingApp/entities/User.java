@@ -9,7 +9,7 @@ public class User {
 	private String password;
 	private String firstName;
 	private String lastName;
-	private String gender;
+	private int gender;
 	private String userType;
 	
 	
@@ -43,10 +43,10 @@ public class User {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public String getGender() {
+	public int getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(int gender) {
 		this.gender = gender;
 	}
 	public String getUserType() {
