@@ -1,11 +1,13 @@
 package com.website.bookMarkingApp.managers;
 
+import com.website.bookMarkingApp.dao.UserDao;
 import com.website.bookMarkingApp.entities.User;
 
 public class UserManager {
 
 	// creating instance of userMnager class
-	public static UserManager instance = new UserManager();;
+	public static UserManager instance = new UserManager();
+	private static UserDao dao = new UserDao();
 
 	// so you cant instantiate a class
 	private UserManager() {}
@@ -26,6 +28,14 @@ public class UserManager {
 		
 		return user;
 
+	}
+	
+	public User[] getUsers() {
+		return dao.getUsers();
+	}
+	
+	public static UserDao getDao() {
+		return dao;
 	}
 
 }

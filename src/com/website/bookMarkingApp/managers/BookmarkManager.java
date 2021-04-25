@@ -1,10 +1,12 @@
 package com.website.bookMarkingApp.managers;
 
+import com.website.bookMarkingApp.dao.BookmarkDao;
 import com.website.bookMarkingApp.entities.*;
 
 public class BookmarkManager {
 
 	private static BookmarkManager instance = new BookmarkManager();
+	private static BookmarkDao dao = new BookmarkDao();
 
 	private BookmarkManager() {
 	}
@@ -60,6 +62,23 @@ public class BookmarkManager {
 
 		return weblink;
 
+	}
+	
+	public Bookmark[][] getBookmarks(){
+		return dao.getBookmarks();
+	}
+	
+	public static BookmarkDao getDao() {
+		return dao;
+	}
+
+	public void saveUserBookmark(User user, Bookmark bookmark) {
+		UserBookmark userBookmark = new UserBookmark();
+		userBookmark.setUser(user);
+		userBookmark.setBookmark(bookmark);
+		
+		dao.saveUserBookmark(userBookmark);
+		
 	}
 
 }

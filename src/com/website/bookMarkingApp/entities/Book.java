@@ -1,6 +1,6 @@
 package com.website.bookMarkingApp.entities;
 
-public class Book {
+public class Book extends Bookmark{
 	
 	private String Author;
 	private long id;

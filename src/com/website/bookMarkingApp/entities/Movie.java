@@ -1,6 +1,6 @@
 package com.website.bookMarkingApp.entities;
 
-public class Movie {
+public class Movie extends Bookmark{
 	
 	
 	private long id;
