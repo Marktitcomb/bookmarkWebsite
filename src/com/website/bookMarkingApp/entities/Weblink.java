@@ -2,9 +2,10 @@ package com.website.bookMarkingApp.entities;
 
 public class Weblink extends Bookmark {
 
-	private long id;
+
+	public long id;
 	private String title;
-	private String url;
+	public String url;
 	private String host;
 
 	public long getId() {
@@ -23,11 +24,11 @@ public class Weblink extends Bookmark {
 		this.title = title;
 	}
 
-	public String getUrl() {
+	public String getProfileUrl() {
 		return url;
 	}
 
-	public void setUrl(String url) {
+	public void setProfileUrl(String url) {
 		this.url = url;
 	}
 
@@ -38,5 +39,24 @@ public class Weblink extends Bookmark {
 	public void setHost(String host) {
 		this.host = host;
 	}
+	
+	@Override
+	public String toString() {
+		return "Weblink [id=" + id + ", title=" + title + ", url=" + url + ", host=" + host + "]";
+	}
+
+	@Override
+	public boolean isKidFriendlyEligible() {
+		
+		if(getTitle().contains("porn")|| url.contains("porn")) {
+			return false;
+		}
+		else if(getHost().contains("adult")||getTitle().contains("adult")) {
+			return false;
+		}
+		return true;
+		
+	}
+	
 
 }

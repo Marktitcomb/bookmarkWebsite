@@ -62,6 +62,11 @@ public class Book extends Bookmark{
 	public void setAmazonRating(double amazonRating) {
 		this.amazonRating = amazonRating;
 	}
+	@Override
+	public boolean isKidFriendlyEligible() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 	
 
 }
