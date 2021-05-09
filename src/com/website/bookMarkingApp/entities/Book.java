@@ -1,6 +1,10 @@
 package com.website.bookMarkingApp.entities;
 
-public class Book extends Bookmark{
+import org.apache.commons.lang3.StringUtils;
+
+import com.website.bookMarkingApp.partner.Shareable;
+
+public class Book extends Bookmark implements Shareable{
 	
 	private String Author;
 	private long id;
@@ -66,6 +70,22 @@ public class Book extends Bookmark{
 	public boolean isKidFriendlyEligible() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	@Override
+	public String getItemData() {
+		// TODO Auto-generated method stub
+		StringBuilder builder =  new StringBuilder();
+		builder.append("<item>");
+			builder.append("<type>book</type>");
+			builder.append("<Title>").append(getTitle()).append("</Title>");
+			builder.append("<Publisher>").append(publisher).append("</Publisher>");
+			builder.append("<PublicationYear>").append(publishYear).append("</PublicationYear>");
+			builder.append("<Genre>").append(genre).append("</Genre>");
+			builder.append("<Authors>").append(StringUtils.join(authors, ",")).append("</Authors>");
+		builder.append("</item>");
+	
+
+		return builder.toString();
 	}
 	
 

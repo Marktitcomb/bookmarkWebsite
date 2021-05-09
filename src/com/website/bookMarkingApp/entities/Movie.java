@@ -21,7 +21,7 @@ public class Movie extends Bookmark{
 	}
 	private String []  cast;
 	private String []  directors;
-	private String genre;
+	private int genre;
 	private double imdbRating;
 	
 	
@@ -49,10 +49,10 @@ public class Movie extends Bookmark{
 	public void setDirectors(String[] directors) {
 		this.directors = directors;
 	}
-	public String getGenre() {
+	public int getGenre() {
 		return genre;
 	}
-	public void setGenre(String genre) {
+	public void setGenre(int genre) {
 		this.genre = genre;
 	}
 	public double getImdbRating() {

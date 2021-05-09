@@ -15,27 +15,31 @@ public class Launch {
 		
 		loadData();
 		
+
+		//users = UserManager.getDao().getUsers();
+		//bookmarks = BookmarkManager.getDao().getBookmarks();
 		
-		users = UserManager.getDao().getUsers();
-		bookmarks = BookmarkManager.getDao().getBookmarks();
+		//startBookmarking();
 		
-		startBookmarking();
-		
-		System.out.println("Printing all Data...");
-		printUserData();
-		System.out.println("Printing all bookmarks...");
-		printBookmarks();
+//		System.out.println("Printing all Data...");
+//		printUserData();
+//		System.out.println("Printing all bookmarks...");
+//		printBookmarks();
 
 	}
 	
 	private static void startBookmarking() {
 		for(User user: users) {
-			View.bookmark(user, bookmarks);
+			View.browse(user, bookmarks);
 		}
 	}
 
 	public static void loadData() {
 		DataStore.loadData();
+		
+	
+	
+	
 	}
 	
 	public static void printBookmarks() {

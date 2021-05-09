@@ -7,7 +7,8 @@ public class UserDao {
 	
 	public User [] getUsers() {
 		
-		return DataStore.getUsers();
+		//return DataStore.getUsers();
+		return null;
 	}
 
 }

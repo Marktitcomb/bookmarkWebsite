@@ -1,106 +1,205 @@
 package com.website.bookMarkingApp;
 
-import com.website.bookMarkingApp.entities.*;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.website.bookMarkingApp.constants.*;
 import com.website.bookMarkingApp.managers.*;
+import com.website.bookMarkingApp.entities.*;
+
 
 public class DataStore {
 
-	private static final int USER_BOOKMARK_LIMIT = 5;
-	public static final int BOOKMARK_COUNT_PER_TYPE = 5;
-	public static final int BOOKMARK_TYPES_COUNT = 3;
-	private static final int TOTAL_USER_COUNT = 5;
-	// three data structures
-	private static User[] users = new User[TOTAL_USER_COUNT];
-	
-	
-	public static User[] getUsers() {
+	private static List<User> users = new ArrayList<>();
+	public static List<User> getUsers() {
 		return users;
 	}
 
-	public static UserBookmark[] getUserBookmarks() {
-		return userBookmarks;
-	}
-	public static Bookmark[][] getBookmarks() {
+	private static List<List<Bookmark>> bookmarks = new ArrayList<>();
+	public static List<List<Bookmark>> getBookmarks() {
 		return bookmarks;
 	}
+
+	private static List<UserBookmark> userBookmarks = new ArrayList<>();
 	
-	public static int getUserBookmarkLimit() {
-		return USER_BOOKMARK_LIMIT;
-	}
-
-
-
-
-	// three types of bookmarks 5 of each
-	private static Bookmark[][] bookmarks = new Bookmark[BOOKMARK_TYPES_COUNT][BOOKMARK_COUNT_PER_TYPE];
-	// 5 users each can have 5 bookmarks
-	private static UserBookmark[] userBookmarks = new UserBookmark[TOTAL_USER_COUNT * USER_BOOKMARK_LIMIT];
-	private static int bookmarkIndex;
-
 	public static void loadData() {
-		loadUsers();
-		loadWeblinks();
-		loadBooks();
-		loadMovies();
-	}
-
-	private static void loadUsers() {
-		users[0] = UserManager.getInstance().createUser(1000, "user0@semanticsquare.com", "John", "M", Gender.MALE,
-				UserType.USER);
-		users[1] = UserManager.getInstance().createUser(1001, "user1@semanticsquare.com", "Sam M", "M", Gender.MALE,
-				UserType.USER);
-		users[2] = UserManager.getInstance().createUser(1002, "user2@semanticsquare.com", "Anita", "M", Gender.MALE,
-				UserType.EDITOR);
-		users[3] = UserManager.getInstance().createUser(1003, "user3@semanticsquare.com", "Sara", "M", Gender.FEMALE,
-				UserType.EDITOR);
-		users[4] = UserManager.getInstance().createUser(1004, "user4@semanticsquare.com", "Dheeru", "M", Gender.MALE,
-				UserType.CHIEF_EDITOR);
-	}
-
-	private static void loadWeblinks() {
-		bookmarks[0][0] = BookmarkManager.getInstance().createWeblink(2000, "Taming Tiger",
-				"http://www.javaworld.com/article/2072759/core-java/taming-tiger--part-2.html", "unknown");
-		bookmarks[0][1] = BookmarkManager.getInstance().createWeblink(2001, "Taming Tiger 1",
-				"http://www.javaworld.com/article/2072759/core-java/taming-tiger--part-2.html", "unknown");
-		bookmarks[0][2] = BookmarkManager.getInstance().createWeblink(2002, "Taming Tiger 2",
-				"http://www.javaworld.com/article/2072759/core-java/taming-tiger--part-2.html", "unknown");
-		bookmarks[0][3] = BookmarkManager.getInstance().createWeblink(2003, "Taming Tiger 3",
-				"http://www.javaworld.com/article/2072759/core-java/taming-tiger--part-2.html", "unknown");
-		bookmarks[0][4] = BookmarkManager.getInstance().createWeblink(2004, "Taming Tiger 4",
-				"http://www.javaworld.com/article/2072759/core-java/taming-tiger--part-2.html", "unknown");
-	}
-
-	private static void loadBooks() {
-		bookmarks[1][0] = BookmarkManager.getInstance().createBook(4000, "Walden", 1854, "Wilder Publications", 4.3);
-		bookmarks[1][1] = BookmarkManager.getInstance().createBook(4001, "Walden2", 1854, "Wilder Publications", 4.3);
-		bookmarks[1][2] = BookmarkManager.getInstance().createBook(4002, "Walden3", 1854, "Wilder Publications", 4.3);
-		bookmarks[1][3] = BookmarkManager.getInstance().createBook(4003, "Walden4", 1854, "Wilder Publications", 4.3);
-		bookmarks[1][4] = BookmarkManager.getInstance().createBook(4004, "Walden5", 1854, "Wilder Publications", 4.3);
-	}
-
-	private static void loadMovies() {
-		bookmarks[2][0] = BookmarkManager.getInstance().createMovie(3000, "Citizen Kane", "url", 1941,
-				new String[] { "Orson Welles", "Joseph Cotten" }, new String[] { "Orson Welles", "Joseph Cotten" },
-				MovieGenre.CLASSICS, 84);
-		bookmarks[2][1] = BookmarkManager.getInstance().createMovie(3000, "Citizen Kane", "url", 1941,
-				new String[] { "Orson Welles", "Joseph Cotten" }, new String[] { "Orson Welles", "Joseph Cotten" },
-				MovieGenre.CLASSICS, 84);
-		bookmarks[2][2] = BookmarkManager.getInstance().createMovie(3000, "Citizen Kane", "url", 1941,
-				new String[] { "Orson Welles", "Joseph Cotten" }, new String[] { "Orson Welles", "Joseph Cotten" },
-				MovieGenre.CLASSICS, 84);
-		bookmarks[2][3] = BookmarkManager.getInstance().createMovie(3000, "Citizen Kane", "url", 1941,
-				new String[] { "Orson Welles", "Joseph Cotten" }, new String[] { "Orson Welles", "Joseph Cotten" },
-				MovieGenre.CLASSICS, 84);
-		bookmarks[2][4] = BookmarkManager.getInstance().createMovie(3000, "Citizen Kane", "url", 1941,
-				new String[] { "Orson Welles", "Joseph Cotten" }, new String[] { "Orson Welles", "Joseph Cotten" },
-				MovieGenre.CLASSICS, 84);
-	}
-
-	public static void add(UserBookmark userBookmark) {
-		userBookmarks[bookmarkIndex] = userBookmark;
-		bookmarkIndex ++;
+//		loadUsers();
+//		loadWeblinks();
+//		loadBooks();
+//		loadMovies();
 		
+		
+		try {
+			//loading the jdbc driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			
+			
+		}catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		String url = "jdbc:mysql://localhost:3306/bookmarkingAppDB?useSSL=false";
+		String user = "root";
+		String password = "Guitar0903";
+		// Connection string: <protocol>:<sub-protocol>:<data-source details>
+		try (
+			    Connection conn = DriverManager.getConnection(url, user, password);
+				Statement stmt = conn.createStatement();
+				) {
+			loadUsers(stmt);
+			//loadWebLinks(stmt); 
+			//loadMovies(stmt);
+			//loadBooks(stmt);
+				
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+			
 	}
+	
+	private static void loadMovies(Statement stmt) throws SQLException {
+		String query = "Select m.id, title, release_year, GROUP_CONCAT(DISTINCT a.name SEPARATOR ',') AS cast, GROUP_CONCAT(DISTINCT d.name SEPARATOR ',') AS directors, movie_genre_id, imdb_rating"
+				+ " from Movie m, Actor a, Movie_Actor ma, Director d, Movie_Director md "
+				+ "where m.id = ma.movie_id and ma.actor_id = a.id and "
+				      + "m.id = md.movie_id and md.director_id = d.id group by m.id";
+		ResultSet rs = stmt.executeQuery(query);
+		
+		List<Bookmark> bookmarkList = new ArrayList<>();
+		while (rs.next()) {
+			long id = rs.getLong("id");
+			String title = rs.getString("title");
+			int releaseYear = rs.getInt("release_year");
+			String[] cast = rs.getString("cast").split(",");
+			String[] directors = rs.getString("directors").split(",");			
+			int genre_id = rs.getInt("movie_genre_id");
+			//MovieGenre genre = MovieGenre.values()[genre_id];
+			int imdbRating = (int) rs.getDouble("imdb_rating");
+			
+	
+			
+			Bookmark bookmark = BookmarkManager.getInstance().createMovie(id, title, "", releaseYear, cast, directors, genre_id, imdbRating/*, values[7]*/);
+    		bookmarkList.add(bookmark); 
+		}
+		bookmarks.add(bookmarkList);
+	}
+	
+	private static void loadBooks(Statement stmt) throws SQLException {		
+		//query the database
+		String query = "Select b.id, title, publication_year, p.name, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating"
+				+ " from Book b, Publisher p, Author a, Book_Author ba "//from all the individual tables 
+				+ "where b.publisher_id = p.id and b.id = ba.book_id and ba.author_id = a.id group by b.id"; //where i.e the Book-table publisher id
+					//is the same as the publisher-table id
+		//get your result
+    	ResultSet rs = stmt.executeQuery(query);
+    	//rs is a long list of results side by side 
+		//put the result into your java application until result is empty
+    	List<Bookmark> bookmarkList = new ArrayList<>();
+    	while (rs.next()) {
+    		long id = rs.getLong("id");
+			String title = rs.getString("title");
+			int publicationYear = rs.getInt("publication_year");
+			String publisher = rs.getString("name");		
+			String[] authors = rs.getString("authors").split(",");			
+			int genre_id = rs.getInt("book_genre_id");
+			//BookGenre genre = BookGenre.values()[genre_id];
+			double amazonRating = rs.getDouble("amazon_rating");
+			
+			//Date createdDate = rs.getDate("created_date");
+			//System.out.println("createdDate: " + createdDate);
+			//Timestamp timeStamp = rs.getTimestamp(8);
+			//System.out.println("timeStamp: " + timeStamp);
+			//System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
+			
+			System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: "  + ", amazonRating: " + amazonRating);
+    		
+			
+			
+			
+    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating/*, values[5]*/);
+    		bookmarkList.add(bookmark); 
+    	}
+    	bookmarks.add(bookmarkList);
+    }	
+	
+	private static void loadWeblinks(Statement stmt) throws SQLException {		
+		//query the database
+		String query = "Select b.id, title, publication_year, p.name, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating"
+				+ " from Book b, Publisher p, Author a, Book_Author ba "//from all the individual tables 
+				+ "where b.publisher_id = p.id and b.id = ba.book_id and ba.author_id = a.id group by b.id"; //where i.e the Book-table publisher id
+					//is the same as the publisher-table id
+		//get your result
+    	ResultSet rs = stmt.executeQuery(query);
+    	//rs is a long list of results side by side 
+		//put the result into your java application until result is empty
+    	List<Bookmark> bookmarkList = new ArrayList<>();
+    	while (rs.next()) {
+    		long id = rs.getLong("id");
+			String title = rs.getString("title");
+			int publicationYear = rs.getInt("publication_year");
+			String publisher = rs.getString("name");		
+			String[] authors = rs.getString("authors").split(",");			
+			int genre_id = rs.getInt("book_genre_id");
+			//BookGenre genre = BookGenre.values()[genre_id];
+			double amazonRating = rs.getDouble("amazon_rating");
+			
+			//Date createdDate = rs.getDate("created_date");
+			//System.out.println("createdDate: " + createdDate);
+			Timestamp timeStamp = rs.getTimestamp(8);
+			System.out.println("timeStamp: " + timeStamp);
+			System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
+			
+			System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
+    		
+			
+    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating/*, values[5]*/);
+    		bookmarkList.add(bookmark); 
+    	}
+    	bookmarks.add(bookmarkList);
+    }	
+
+	
+	private static void loadUsers(Statement stmt) throws SQLException {		
+		//query the database
+		String query = "Select *"
+				+ " from User u";
+		
+    	ResultSet rs = stmt.executeQuery(query);
+    	//rs is a long list of results side by side 
+		//put the result into your java application until result is empty
+    	while (rs.next()) {
+    		long id = rs.getLong("id");
+			String email = rs.getString("email");
+			String name = rs.getString("first_name");
+			String last_Name = rs.getString("last_Name");		
+			int gender_id = rs.getInt("gender_id");		
+			String user_type_id = rs.getString("user_type_id");
+			
+			//Date createdDate = rs.getDate("created_date");
+			//System.out.println("createdDate: " + createdDate);
+			Timestamp timeStamp = rs.getTimestamp(8);
+			System.out.println("timeStamp: " + timeStamp);
+			System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
+			
+			System.out.println("id: " + id + ", title: " + email + ", publication year: " + name) ;//, publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
+    		
+			
+			
+			
+    		User user = UserManager.getInstance().createUser(id, email, name, last_Name,  gender_id, user_type_id/*, values[5]*/);
+    		users.add(user);
+    	}
+    	
+    }
+
+	
+	public static void add(UserBookmark userBookmark) {
+		userBookmarks.add(userBookmark);		
+	}	
 
 }

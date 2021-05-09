@@ -23,7 +23,7 @@ public class BookmarkManager {
 	// rather than constructing a movie object in it's class, the manager does this
 	// for you
 	public Movie createMovie(long id, String title, String profileUrl, int releaseYear, String[] cast,
-			String[] directors, String genre, int imdbRating) {
+			String[] directors, int genre, int imdbRating) {
 
 		Movie movie = new Movie();
 		movie.setId(id);
@@ -63,11 +63,11 @@ public class BookmarkManager {
 		return weblink;
 
 	}
-	
-	public Bookmark[][] getBookmarks(){
+
+	public Bookmark[][] getBookmarks() {
 		return dao.getBookmarks();
 	}
-	
+
 	public static BookmarkDao getDao() {
 		return dao;
 	}
@@ -76,9 +76,27 @@ public class BookmarkManager {
 		UserBookmark userBookmark = new UserBookmark();
 		userBookmark.setUser(user);
 		userBookmark.setBookmark(bookmark);
-		
+
 		dao.saveUserBookmark(userBookmark);
-		
+
+	}
+
+	public void setIsKidFriendlyEligible(User user, String childFriendlyStatus, Bookmark bookmark) {
+		bookmark.setIsKidFriendlyEligible(childFriendlyStatus);
+		bookmark.setChildFriendlyMarkedBY(user);
+		System.out.println("Child Friendly status " + childFriendlyStatus + "," + bookmark);
+		System.out.println("Child Friendly status marked by" + user.getEmail());
+
+	}
+
+	public static void shareBookmark(User user, Bookmark bookmark) {
+		bookmark.setSharedBy(user);
+		System.out.println("Data being shared by: " + user);
+		if(bookmark instanceof Book) {
+			System.out.println("Data to be shared: " + ((Book) bookmark).getItemData()); 
+		}else if(bookmark instanceof Weblink) {
+			System.out.println("Data to be shared: " + ((Weblink) bookmark).getItemData()); 
+		}
 	}
 
 }

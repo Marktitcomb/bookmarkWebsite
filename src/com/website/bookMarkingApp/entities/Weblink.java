@@ -1,6 +1,10 @@
 package com.website.bookMarkingApp.entities;
 
-public class Weblink extends Bookmark {
+import org.apache.commons.lang3.StringUtils;
+
+import com.website.bookMarkingApp.partner.Shareable;
+
+public class Weblink extends Bookmark implements Shareable{
 
 
 	public long id;
@@ -56,6 +60,21 @@ public class Weblink extends Bookmark {
 		}
 		return true;
 		
+	}
+
+	@Override
+	public String getItemData() {
+		// TODO Auto-generated method stub
+		
+		// TODO Auto-generated method stub
+				StringBuilder builder =  new StringBuilder();
+				builder.append("<item>");
+					builder.append("<type>weblink</type>");
+					builder.append("<Title>").append(getTitle()).append("</Title>");
+					builder.append("<URL>").append(url).append("</URL>");
+				builder.append("</item>");
+			
+		return builder.toString();
 	}
 	
 

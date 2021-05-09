@@ -17,8 +17,23 @@ public class BookmarkController {
 	}
 
 
+	//this is the controller connecting to the model 
+	//the controller only performs this one task at present 
 	public void saveUserBookmark(User user, Bookmark bookmark) {
 		BookmarkManager.getInstance().saveUserBookmark(user, bookmark);
+		
+	}
+
+
+	public void setIsKidFriendlyEligible(User user, String childFriendlyStatus, Bookmark bookmark) {
+		// dont want business logic in controller 
+		BookmarkManager.getInstance().setIsKidFriendlyEligible(user, childFriendlyStatus, bookmark);
+		
+	}
+
+
+	public void shareBookmark(User user, Bookmark bookmark) {
+		BookmarkManager.shareBookmark(user, bookmark); 
 		
 	}
 }
