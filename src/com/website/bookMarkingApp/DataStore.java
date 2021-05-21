@@ -55,7 +55,9 @@ public class DataStore {
 			loadUsers(stmt);
 			//loadWebLinks(stmt); 
 			//loadMovies(stmt);
-			//loadBooks(stmt);
+			loadBooks(stmt);
+			
+			//System.out.println(bookmarks);
 				
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -102,9 +104,11 @@ public class DataStore {
     	List<Bookmark> bookmarkList = new ArrayList<>();
     	while (rs.next()) {
     		long id = rs.getLong("id");
+    	
 			String title = rs.getString("title");
 			int publicationYear = rs.getInt("publication_year");
-			String publisher = rs.getString("name");		
+			String publisher = rs.getString("name");
+			//System.out.println(publisher);
 			String[] authors = rs.getString("authors").split(",");			
 			int genre_id = rs.getInt("book_genre_id");
 			//BookGenre genre = BookGenre.values()[genre_id];
@@ -116,52 +120,57 @@ public class DataStore {
 			//System.out.println("timeStamp: " + timeStamp);
 			//System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
 			
-			System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: "  + ", amazonRating: " + amazonRating);
+			//System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: "  + ", amazonRating: " + amazonRating);
     		
 			
-			
-			
-    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating/*, values[5]*/);
+    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating);
+    		bookmark.setKidFriendlyEligible(ChildFriendlyEligible.UNKNOWN);
+    		
+    		//System.out.println(book.getItemData());
+    		
+    		//System.out.println(bookmark.getId());
+    		//System.out.println(bookmark.toString());
+    		
     		bookmarkList.add(bookmark); 
     	}
     	bookmarks.add(bookmarkList);
     }	
 	
-	private static void loadWeblinks(Statement stmt) throws SQLException {		
-		//query the database
-		String query = "Select b.id, title, publication_year, p.name, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating"
-				+ " from Book b, Publisher p, Author a, Book_Author ba "//from all the individual tables 
-				+ "where b.publisher_id = p.id and b.id = ba.book_id and ba.author_id = a.id group by b.id"; //where i.e the Book-table publisher id
-					//is the same as the publisher-table id
-		//get your result
-    	ResultSet rs = stmt.executeQuery(query);
-    	//rs is a long list of results side by side 
-		//put the result into your java application until result is empty
-    	List<Bookmark> bookmarkList = new ArrayList<>();
-    	while (rs.next()) {
-    		long id = rs.getLong("id");
-			String title = rs.getString("title");
-			int publicationYear = rs.getInt("publication_year");
-			String publisher = rs.getString("name");		
-			String[] authors = rs.getString("authors").split(",");			
-			int genre_id = rs.getInt("book_genre_id");
-			//BookGenre genre = BookGenre.values()[genre_id];
-			double amazonRating = rs.getDouble("amazon_rating");
-			
-			//Date createdDate = rs.getDate("created_date");
-			//System.out.println("createdDate: " + createdDate);
-			Timestamp timeStamp = rs.getTimestamp(8);
-			System.out.println("timeStamp: " + timeStamp);
-			System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
-			
-			System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
-    		
-			
-    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating/*, values[5]*/);
-    		bookmarkList.add(bookmark); 
-    	}
-    	bookmarks.add(bookmarkList);
-    }	
+//	private static void loadWeblinks(Statement stmt) throws SQLException {		
+//		//query the database
+//		String query = "Select b.id, title, publication_year, p.name, GROUP_CONCAT(a.name SEPARATOR ',') AS authors, book_genre_id, amazon_rating"
+//				+ " from Book b, Publisher p, Author a, Book_Author ba "//from all the individual tables 
+//				+ "where b.publisher_id = p.id and b.id = ba.book_id and ba.author_id = a.id group by b.id"; //where i.e the Book-table publisher id
+//					//is the same as the publisher-table id
+//		//get your result
+//    	ResultSet rs = stmt.executeQuery(query);
+//    	//rs is a long list of results side by side 
+//		//put the result into your java application until result is empty
+//    	List<Bookmark> bookmarkList = new ArrayList<>();
+//    	while (rs.next()) {
+//    		long id = rs.getLong("id");
+//			String title = rs.getString("title");
+//			int publicationYear = rs.getInt("publication_year");
+//			String publisher = rs.getString("name");		
+//			String[] authors = rs.getString("authors").split(",");			
+//			int genre_id = rs.getInt("book_genre_id");
+//			//BookGenre genre = BookGenre.values()[genre_id];
+//			double amazonRating = rs.getDouble("amazon_rating");
+//			
+//			//Date createdDate = rs.getDate("created_date");
+//			//System.out.println("createdDate: " + createdDate);
+//			Timestamp timeStamp = rs.getTimestamp(8);
+//			//System.out.println("timeStamp: " + timeStamp);
+//			//System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
+//			
+//			//System.out.println("id: " + id + ", title: " + title + ", publication year: " + publicationYear + ", publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
+//    		
+//			
+//    		Bookmark bookmark = BookmarkManager.getInstance().createBook(id, title, publicationYear, publisher,  amazonRating);
+//    		bookmarkList.add(bookmark); 
+//    	}
+//    	bookmarks.add(bookmarkList);
+//    }	
 
 	
 	private static void loadUsers(Statement stmt) throws SQLException {		
@@ -177,21 +186,26 @@ public class DataStore {
 			String email = rs.getString("email");
 			String name = rs.getString("first_name");
 			String last_Name = rs.getString("last_Name");		
-			int gender_id = rs.getInt("gender_id");		
-			String user_type_id = rs.getString("user_type_id");
+			int gender_id = rs.getInt("gender_id");	
+			
+			int user_type_enum_number = rs.getInt("user_type_id");
+			
+			UserType user_type = UserType.values()[user_type_enum_number];
+			
+			//UserType user_type_id = UserType.CHIEF_EDITOR
 			
 			//Date createdDate = rs.getDate("created_date");
 			//System.out.println("createdDate: " + createdDate);
 			Timestamp timeStamp = rs.getTimestamp(8);
-			System.out.println("timeStamp: " + timeStamp);
-			System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
+			//System.out.println("timeStamp: " + timeStamp);
+			//System.out.println("localDateTime: " + timeStamp.toLocalDateTime());
 			
-			System.out.println("id: " + id + ", title: " + email + ", publication year: " + name) ;//, publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
+			//System.out.println("id: " + id + ", title: " + email + ", publication year: " + name) ;//, publisher: " + publisher + ", authors: " + String.join(", ", authors) + ", genre: " + ", amazonRating: " + amazonRating);
     		
 			
 			
 			
-    		User user = UserManager.getInstance().createUser(id, email, name, last_Name,  gender_id, user_type_id/*, values[5]*/);
+    		User user = UserManager.getInstance().createUser(id, email, name, last_Name,  gender_id, user_type);
     		users.add(user);
     	}
     	

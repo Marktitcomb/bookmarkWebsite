@@ -1,37 +1,40 @@
 package com.website.bookMarkingApp;
 
 import com.website.bookMarkingApp.entities.Bookmark;
+
+import java.sql.SQLException;
+import java.util.List;
 import com.website.bookMarkingApp.entities.User;
 import com.website.bookMarkingApp.managers.UserManager;
 import com.website.bookMarkingApp.managers.BookmarkManager;
 
-public class Launch {
+public class Launch{
 	
-	private static User[] users;
-	private static Bookmark [][] bookmarks;
+	private static List<User> users;
+	private static List<List<Bookmark>> bookmarks;
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public static void main(String[] args) throws SQLException {
 		
 		loadData();
 		
-
-		//users = UserManager.getDao().getUsers();
-		//bookmarks = BookmarkManager.getDao().getBookmarks();
 		
-		//startBookmarking();
+		users = DataStore.getUsers();
+		bookmarks = DataStore.getBookmarks();
 		
-//		System.out.println("Printing all Data...");
-//		printUserData();
-//		System.out.println("Printing all bookmarks...");
-//		printBookmarks();
-
+		start();
 	}
 	
-	private static void startBookmarking() {
+	private static void start() throws SQLException{
+		// TODO Auto-generated method stub
+		//bookmarks are just the list of movies
+		//list of weblinks and books
+		
+		//there are all subclasses of bookmark 
 		for(User user: users) {
 			View.browse(user, bookmarks);
+			
 		}
+		
 	}
 
 	public static void loadData() {
@@ -40,16 +43,6 @@ public class Launch {
 	
 	
 	
-	}
-	
-	public static void printBookmarks() {
-		for(Bookmark [] bookMarkType: bookmarks) {
-			for(Bookmark bookmark: bookMarkType) {
-				
-				System.out.println(bookmark.toString());
-			}
-		}
-		
 	}
 	
 	public static void printUserData() {

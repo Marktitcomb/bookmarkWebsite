@@ -1,12 +1,19 @@
 package com.website.bookMarkingApp.constants;
 
-public class UserType {
+public enum UserType {
 	
+	User(0), EDITOR(1), CHIEF_EDITOR(2);
 	
-	private UserType() {}
+	private UserType(int value) {
+		this.value = value;
+	}
 	
-	public static final String USER = "user";
-	public static final String EDITOR = "editor";
-	public static final String CHIEF_EDITOR = "chiefeditor";
+	private int value;
+	
+	public int getType() {
+		return value;
+	}
 
+	
 }
+

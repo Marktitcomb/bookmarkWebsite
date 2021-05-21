@@ -7,7 +7,7 @@ public abstract class Bookmark {
 	private long id;
 	private String title;
 	private String profileUrl;
-	private String isKidFriendlyEligible = ChildFriendlyEligible.UNKOWN;
+	private ChildFriendlyEligible isKidFriendlyEligible;// = ChildFriendlyEligible.UNKNOWN;
 	private User childFriendlyMarkedBY;
 	private User sharedBy;
 
@@ -33,11 +33,11 @@ public abstract class Bookmark {
 		this.childFriendlyMarkedBY = childFriendlyMarkedBY;
 	}
 
-	public String getIsKidFriendlyEligible() {
+	public ChildFriendlyEligible getIsKidFriendlyEligible() {
 		return isKidFriendlyEligible;
 	}
 
-	public void setIsKidFriendlyEligible(String isKidFriendlyEligible) {
+	public void setKidFriendlyEligible(ChildFriendlyEligible isKidFriendlyEligible) {
 		this.isKidFriendlyEligible = isKidFriendlyEligible;
 	}
 
@@ -67,7 +67,7 @@ public abstract class Bookmark {
 
 	@Override
 	public String toString() {
-		return "Bookmark [id=" + id + ", title=" + title + ", profileUrl=" + profileUrl + "]";
+		return "Bookmark [id=" + getId() + ", title=" + this.getTitle() + ", profileUrl=" + this.getProfileUrl()  + "]";
 	}
 
 	public abstract boolean isKidFriendlyEligible();

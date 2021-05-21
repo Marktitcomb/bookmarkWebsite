@@ -1,5 +1,7 @@
 package com.website.bookMarkingApp.entities;
 
+import com.website.bookMarkingApp.constants.UserType;
+
 public class User {
 	
 
@@ -9,7 +11,7 @@ public class User {
 	private String firstName;
 	private String lastName;
 	private int gender;
-	private String userType;
+	private UserType userType;
 	
 	
 	public long getId() {
@@ -48,10 +50,10 @@ public class User {
 	public void setGender(int gender) {
 		this.gender = gender;
 	}
-	public String getUserType() {
+	public UserType getUserType() {
 		return userType;
 	}
-	public void setUserType(String userType) {
+	public void setUserType(UserType userType) {
 		this.userType = userType;
 	}
 	

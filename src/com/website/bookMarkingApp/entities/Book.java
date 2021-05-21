@@ -69,7 +69,7 @@ public class Book extends Bookmark implements Shareable{
 	@Override
 	public boolean isKidFriendlyEligible() {
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 	}
 	@Override
 	public String getItemData() {

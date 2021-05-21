@@ -1,5 +1,6 @@
 package com.website.bookMarkingApp.managers;
 
+import com.website.bookMarkingApp.constants.UserType;
 import com.website.bookMarkingApp.dao.UserDao;
 import com.website.bookMarkingApp.entities.User;
 
@@ -16,7 +17,7 @@ public class UserManager {
 		return instance;
 	}
 
-	public User createUser(long id, String email, String firstName, String lastName, int gender, String userType) {
+	public User createUser(long id, String email, String firstName, String lastName, int gender, UserType userType) {
 
 		User user = new User();
 		user.setId(id);

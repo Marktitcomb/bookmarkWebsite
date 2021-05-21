@@ -1,6 +1,10 @@
 package com.website.bookMarkingApp.managers;
 
 import com.website.bookMarkingApp.dao.BookmarkDao;
+import com.website.bookMarkingApp.constants.*;
+
+import java.sql.SQLException;
+import java.util.List;
 import com.website.bookMarkingApp.entities.*;
 
 public class BookmarkManager {
@@ -64,11 +68,11 @@ public class BookmarkManager {
 
 	}
 
-	public Bookmark[][] getBookmarks() {
+	public List<List<Bookmark>> getBookmarks() {
 		return dao.getBookmarks();
 	}
 
-	public static BookmarkDao getDao() {
+	public static BookmarkDao getDao(){
 		return dao;
 	}
 
@@ -81,9 +85,12 @@ public class BookmarkManager {
 
 	}
 
-	public void setIsKidFriendlyEligible(User user, String childFriendlyStatus, Bookmark bookmark) {
-		bookmark.setIsKidFriendlyEligible(childFriendlyStatus);
+	public void setIsKidFriendlyEligible(User user, ChildFriendlyEligible childFriendlyStatus, Bookmark bookmark)  throws SQLException{
+		bookmark.setKidFriendlyEligible(childFriendlyStatus);
 		bookmark.setChildFriendlyMarkedBY(user);
+		
+		dao.updateKidFriendlyStatus(bookmark);
+		
 		System.out.println("Child Friendly status " + childFriendlyStatus + "," + bookmark);
 		System.out.println("Child Friendly status marked by" + user.getEmail());
 
@@ -97,6 +104,8 @@ public class BookmarkManager {
 		}else if(bookmark instanceof Weblink) {
 			System.out.println("Data to be shared: " + ((Weblink) bookmark).getItemData()); 
 		}
+		
+		dao.shareByInfo(bookmark);
 	}
 
 }

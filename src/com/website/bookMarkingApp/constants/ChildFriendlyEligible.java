@@ -1,9 +1,17 @@
 package com.website.bookMarkingApp.constants;
 
-public class ChildFriendlyEligible {
+public enum ChildFriendlyEligible {
 	
-	public static final String UNKOWN = "unknown";
-	public static final String APPROVED = "approved";
-	public static final String DENIED = "denied";
+	APPROVED("approved"), REJECTED("rejected"), UNKNOWN("unknown");
+	
+	private ChildFriendlyEligible(String name) {
+		this.name = name;
+	}
+	
+	private String name;
+	
+	public String getName() {
+		return name; 
+	}
 
 }

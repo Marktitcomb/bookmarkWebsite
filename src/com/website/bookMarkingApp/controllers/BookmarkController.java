@@ -1,10 +1,25 @@
 package com.website.bookMarkingApp.controllers;
 
+import java.sql.SQLException;
+
+import com.website.bookMarkingApp.constants.ChildFriendlyEligible;
 import com.website.bookMarkingApp.entities.Bookmark;
 import com.website.bookMarkingApp.entities.User;
 import com.website.bookMarkingApp.managers.BookmarkManager;
 
 public class BookmarkController {
+	
+	
+	
+	//********************FAKE CLASS***********************************//
+	
+		// This class would be a servlet controller in the web enabled
+		// project 
+		
+		
+		//******************************************************************
+		
+	
 	
 	private static BookmarkController instance = new BookmarkController();
 	
@@ -25,7 +40,7 @@ public class BookmarkController {
 	}
 
 
-	public void setIsKidFriendlyEligible(User user, String childFriendlyStatus, Bookmark bookmark) {
+	public void setIsKidFriendlyEligible(User user, ChildFriendlyEligible childFriendlyStatus, Bookmark bookmark) throws SQLException {
 		// dont want business logic in controller 
 		BookmarkManager.getInstance().setIsKidFriendlyEligible(user, childFriendlyStatus, bookmark);
 		
